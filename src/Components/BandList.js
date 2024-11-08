@@ -6,7 +6,7 @@ const BandList = ({ bands, location }) => {
   }
   return (
     <ul>
-      <h2>Bands in {location?.city || "your area"}</h2>
+      <h2>Bands in {location?.city || "your area"}({bands.length})</h2>
       {bands.map((band) => (
         <li key={band.id}>
           {band.name} - Founded: {band["life-span"].begin}
