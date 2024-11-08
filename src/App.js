@@ -17,12 +17,12 @@ const App = () => {
   }, [location]);
 
   const fetchBands = async (locationOrCity) => {
+    const currentYear = new Date().getFullYear();
+    const last10Years = currentYear - 10;
     try {
       const query = encodeURIComponent(`${locationOrCity.city}`);
       const res = await axios.get(
-        `${MUSICBRAINZ_URL}?query=area:${query} AND type:group AND begin:[${
-          new Date().getFullYear() - 10
-        } TO *]`,
+        `${MUSICBRAINZ_URL}?query=area:${query} AND type:group AND begin:[${last10Years} TO ${currentYear}]&limit=50`,
         {
           headers: {
             Accept: "application/json",
@@ -30,7 +30,9 @@ const App = () => {
         }
       );
       setLocation(locationOrCity);
-      setBands(res.data.artists.slice(0, 50)); // limit to 50 bands
+      let bands = res.data.artists;
+      bands = bands.sort((a, b) => a.name.localeCompare(b.name));
+      setBands(bands); // limit to 50 bands
     } catch (error) {
       console.error("Error fetching bands:", error);
     }
