@@ -21,7 +21,7 @@ const App = () => {
       const query = encodeURIComponent(`${locationOrCity.city}`);
       const res = await axios.get(
         `${MUSICBRAINZ_URL}?query=area:${query} AND type:group AND begin:[${
-          new Date().getFullYear() - 10
+          new Date().getFullYear()
         } TO *]`,
         {
           headers: {
